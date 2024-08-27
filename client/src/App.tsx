@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+
 interface ApiResponse {
     helloWorld: string;
     pElem: string;
@@ -21,12 +22,12 @@ function App() {
     }, []);
 
     return (
-        <div>
+        <div className='bg-gray-100 h-screen'>
             <h1>Data from API:</h1>
             {data ? (
                 <>
-                    <p>{data.helloWorld}</p>
-                    <p>{data.pElem}</p>
+                    <p className="text-3xl font-bold underline">{data.helloWorld}</p>
+                    <p className="text-xl font-bold underline">{data.pElem}</p>
                 </>
             ) : (
                 <p>Loading...</p>
