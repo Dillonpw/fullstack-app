@@ -7,8 +7,8 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     const responseData = {
-        helloWorld: 'Hello, World!',
-        pElem: 'This is a paragraph element',
+        indexTitle: 'Hello, World!',
+        indexSubTitle: 'This is a paragraph element',
     };
     res.json(responseData);
 });

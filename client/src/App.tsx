@@ -1,36 +1,28 @@
-import { useState, useEffect } from 'react';
-
-
-interface ApiResponse {
-    helloWorld: string;
-    pElem: string;
-}
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
-    const [data, setData] = useState<ApiResponse | null>(null);
+    const { isPending, error, data } = useQuery({
+        queryKey: ['repoData'],
+        queryFn: () => fetch('http://localhost:9000').then((res) => res.json()),
+    });
+    if (isPending) {
+        return <p>Loading...</p>;
+    }
 
-    useEffect(() => {
-        fetch('http://localhost:9000/')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json() as Promise<ApiResponse>;
-            })
-            .then((data) => setData(data))
-            .catch((error) => console.error('Error fetching data:', error));
-    }, []);
+    if (error instanceof Error) {
+        return <p>Error fetching data: {error.message}</p>;
+    }
 
     return (
-        <div className='bg-gray-100 h-screen'>
+        <div className="bg-gray-100 h-screen">
             <h1>Data from API:</h1>
-            {data ? (
+            {data && (
                 <>
-                    <p className="text-3xl font-bold underline">{data.helloWorld}</p>
-                    <p className="text-xl font-bold underline">{data.pElem}</p>
+                    <p className="text-3xl font-bold underline">
+                        {data.indexTitle}
+                    </p>
+                    <p className="text-xl font-bold underline">{data.indexSubTitle}</p>
                 </>
-            ) : (
-                <p>Loading...</p>
             )}
         </div>
     );
